@@ -23,6 +23,7 @@ body {
 #board {
   height: 800px;
   width: 100%;
+  margin: 0;
   border: 2px solid #aff4c6;
   background-color: #aff4c6;
 }
@@ -30,4 +31,18 @@ body {
 header {
   display: flex;
   justify-content: space-between;
+}
+#game_grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.gridPattern {
+  box-sizing: border-box;
+  height: 40px;
+  width: 40px;
+  margin: 0;
+  background-color: black;
+  border: 2px solid red;
 }
