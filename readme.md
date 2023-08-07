@@ -1,7 +1,7 @@
 1. Create a grid that will be the board
    // Render board
-   // Render function will render() when the game starts and after every time you eat food.
-   //setTimeout or potential while loop to run the game constantly or end when out of bounds or runs into tail
+   // Start game, when the game starts and after every time you eat food update the css properties
+   // setTimeout or potential while loop to run the game constantly or end when out of bounds or runs into tail
 2. Display score
    // Have score and high score initialize as 0
    //
@@ -10,9 +10,15 @@
 
 3. Controls
    // Keyboard event that determines left or right
-   // will target the key# value
-   // if the press equals the same as the key value then the
-   direction function will run.
+   // If we use click function we have to keep track of the position of the snake
+   // If the snake is moving up and down the Y axis
+   determine where the click is on X axis
+   // If the snake is moving up and down the X axis
+   determine where the click is on Y axis
+   // will evt.target for the click event
+   // Depending on if traveling on Y/X axis click event will determine:
+   if greater than or less than position of the head move left or right
+   if
    // If it doesn't then nothing will run.
 
 4. Snake starts of at predetermined length(Use two dimensonal array/array of objects for snakes features)
@@ -30,4 +36,3 @@
 5. Food will appear randomly in the grid area
    // Make sure to not generate food on snake coordinates
    // Once snakehead passes through length grows
-   <!--  -->

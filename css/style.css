@@ -1,0 +1,33 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  height: 100vh;
+  background-color: black;
+  color: white;
+  width: 100%;
+  font-family: "Open Sans", sans-serif;
+}
+#container {
+  margin: 5vmin 40vmin;
+}
+#header {
+  top: 0;
+  border: 2px solid #aff4c6;
+  padding: 10px 20px;
+}
+#header h1 {
+  color: #aff4c6;
+}
+#board {
+  height: 800px;
+  width: 100%;
+  border: 2px solid #aff4c6;
+  background-color: #aff4c6;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+}
