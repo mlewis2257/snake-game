@@ -21,28 +21,35 @@ body {
   color: #aff4c6;
 }
 #board {
-  height: 800px;
+  height: 80vh;
   width: 100%;
   margin: 0;
   border: 2px solid #aff4c6;
   background-color: #aff4c6;
+  display: grid;
+  grid-template-columns: repeat(30, 1fr);
+  grid-template-rows: repeat(30, 1fr);
+  gap: 0;
+  justify-content: center;
 }
 
 header {
   display: flex;
   justify-content: space-between;
 }
-#game_grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
 
 .gridPattern {
   box-sizing: border-box;
-  height: 40px;
-  width: 40px;
   margin: 0;
   background-color: black;
   border: 2px solid red;
+}
+.btn_div {
+  margin-top: 20px;
+}
+.snake {
+  background-color: greenyellow;
+}
+.food {
+  background-color: red;
 }
