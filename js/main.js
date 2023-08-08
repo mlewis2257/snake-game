@@ -1,30 +1,40 @@
 /*----- constants -----*/
-const gridDiv = document.getElementById("board");
-
-/*----- state variables -----*/
-let score, snake, food, direction;
-let currentIdx = 0;
-let foodIdx = 0;
 const gridWidth = 30;
 const gridHeight = 30;
 
-let board = [];
+/*----- state variables -----*/
+let score, snake, food, direction, board;
+let currentIdx = 0;
+let foodIdx = 0;
+// Classes
+class Snake {
+  constructor() {
+    this.direction = "up";
+  }
+}
 
 /*----- cached elements  -----*/
-
+const gridDiv = document.getElementById("board");
 // const gridDiv = document.getElementById("game_grid");
 /*----- event listeners -----*/
 
 /*----- functions -----*/
-const createArr = (x, y) => {
-  for (let i = 0; i < x; i++) {
+
+const init = () => {
+  score = 0;
+  board = buildBoard();
+};
+
+const buildBoard = () => {
+  const newBoard = [];
+  for (let i = 0; i < gridHeight; i++) {
     let row = [];
-    for (let j = 0; j < y; i++) {
-      row.push(j);
+    for (let j = 0; j < gridWidth; j++) {
+      row.push(null);
     }
-    board.push(row);
+    newBoard.push(row);
   }
-  console.log(board);
+  return newBoard;
 };
 
 const renderGrid = () => {
@@ -38,9 +48,18 @@ const renderGrid = () => {
 };
 
 const renderSnake = () => {};
-const renderFood = () => {};
+const renderFood = () => {
+  // Render the food randomly within the grid
+  // Check to if
+};
 
-const moveSnake = () => {};
+const moveSnake = () => {
+  // Will move through array of divs
+  // Keep track of Head/Tail
+  // Head will be snake[0]
+  // Tail will equal snake.pop()
+  // Snake
+};
 // const iterateDivs = () => {
 //   const childDivs = document.querySelectorAll("#game_grid > div");
 //   console.log(childDivs);
@@ -49,18 +68,6 @@ const moveSnake = () => {};
 const render = () => {
   renderGrid();
   createArr();
-};
-const init = () => {
-  render();
-  let board = [...document.querySelectorAll("#game_grid > div")];
-  direction = 1;
-  snake = [1, 2];
-  food = [0];
-  snake.forEach((idx) => {
-    board[idx].classList.add("snake");
-    console.log(board[idx]);
-  });
-  console.log(board[0]);
 };
 
 init();
