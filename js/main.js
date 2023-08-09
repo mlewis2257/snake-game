@@ -10,6 +10,18 @@ let foodIdx = 0;
 class Snake {
   constructor() {
     this.direction = "up";
+    this.body = {
+      x: 14,
+      y: 14,
+    };
+    this.head = this.body.x;
+    this.tail = this.body.y;
+    this.size = 1;
+  }
+
+  changeDirection(direction) {
+    this.direction = direction;
+    console.log(direction);
   }
 }
 
@@ -23,6 +35,9 @@ const gridDiv = document.getElementById("board");
 const init = () => {
   score = 0;
   board = buildBoard();
+  snake = new Snake();
+  food = 1;
+  direction = snake.direction;
 };
 
 const buildBoard = () => {
