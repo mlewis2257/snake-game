@@ -9,6 +9,27 @@ let currentIdx = 0;
 let foodIdx = 0;
 let lastRenderTime = 0;
 // Classes
+class Food {
+  constructor() {
+    this.body = [
+      {
+        x: 1,
+        y: 1,
+      },
+    ];
+  }
+  changeLocation(newLocation) {
+    newLocation = this.body;
+    let changeFoodX = Math.floor(Math.random() * 30);
+    let changeFoodY = Math.floor(Math.random() * 30);
+
+    newLocation[0].x = changeFoodX;
+    newLocation[0].y = changeFoodY;
+    this.body = newLocation;
+    console.log(this.body);
+  }
+}
+
 class Snake {
   constructor() {
     this.direction = "up";
@@ -56,7 +77,7 @@ class Snake {
     this.body;
     return newHead;
   }
-  eatFood() {}
+  checkFoodEaten() {}
   grow() {
     this.body.push(this.tail);
     this.length++;
@@ -71,26 +92,6 @@ class Snake {
   }
 }
 
-class Food {
-  constructor() {
-    this.body = [
-      {
-        x: 1,
-        y: 1,
-      },
-    ];
-  }
-  changeLocation(newLocation) {
-    newLocation = this.body;
-    let changeFoodX = Math.floor(Math.random() * 30);
-    let changeFoodY = Math.floor(Math.random() * 30);
-
-    newLocation[0].x = changeFoodX;
-    newLocation[0].y = changeFoodY;
-    this.body = newLocation;
-    console.log(this.body);
-  }
-}
 /*----- cached elements  -----*/
 const gridDiv = document.getElementById("board");
 
@@ -98,14 +99,14 @@ const gridDiv = document.getElementById("board");
 
 /*----- functions -----*/
 const update = () => {};
-const draw = (board) => {
+const draw = (gridDiv) => {
   let newSnake = new Snake();
   newSnake.body.forEach((cell) => {
     const snakeEl = document.createElement("div");
     snakeEl.style.gridRowStart = cell.y;
     snakeEl.style.gridColumnStart = cell.x;
     snakeEl.classList.add("snake");
-    board.push(snakeEl);
+    gridDiv.push(snakeEl);
   });
 };
 const main = (currentTime) => {
@@ -126,6 +127,7 @@ const init = () => {
   snake = new Snake();
   food = new Food();
   direction = snake.direction;
+  render();
 };
 
 const buildBoard = () => {
@@ -133,17 +135,30 @@ const buildBoard = () => {
   for (let i = 0; i < gridHeight; i++) {
     let row = [];
     for (let j = 0; j < gridWidth; j++) {
-      row.push(null);
+      row.push(0);
     }
     newBoard.push(row);
   }
   return newBoard;
 };
 
-const renderGrid = () => {
+const renderBoard = () => {
+  gridDiv.innerHTML = "";
+
   board.forEach((colArr, colIdx) => {
-    console.log(colArr, colIdx);
-    colArr.forEach((cell, rowIdx) => {});
+    colArr.forEach((cell, rowIdx) => {
+      const cellEl = document.createElement("div");
+      cellEl.style.gridRowStart = rowIdx;
+      cellEl.style.gridColumnStart = colIdx;
+
+      // if (cell[rowIdx] === snake.body.x && cell[colIdx] === snake.body.y) {
+      //   cellEl.classList.add("snake");
+      // } else if (cell[rowIdx] === food.body.x && cell[colIdx] === food.body.y) {
+      //   cellEl.classList.add("food");
+      // }
+      cellEl.style.backgroundColor = "black";
+      gridDiv.appendChild(cellEl);
+    });
   });
 };
 
@@ -162,8 +177,7 @@ const moveSnake = () => {
 };
 
 const render = () => {
-  renderGrid();
-  createArr();
+  renderBoard();
 };
 
 init();
