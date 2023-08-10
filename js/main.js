@@ -52,6 +52,8 @@ class Snake {
         newHead.y += 1;
         break;
     }
+    this.body.unshift(newHead);
+    this.body;
     return newHead;
   }
   eatFood() {}
@@ -59,8 +61,36 @@ class Snake {
     this.body.push(this.tail);
     this.length++;
   }
+  collisionChecker() {
+    if (this.head.y < 30 || this.head.y < 0) {
+      console.log("game over, you lost!");
+    }
+    if (this.head.x < 30 || this.head.x < 0) {
+      console.log("game over, you lost!");
+    }
+  }
 }
 
+class Food {
+  constructor() {
+    this.body = [
+      {
+        x: 1,
+        y: 1,
+      },
+    ];
+  }
+  changeLocation(newLocation) {
+    newLocation = this.body;
+    let changeFoodX = Math.floor(Math.random() * 30);
+    let changeFoodY = Math.floor(Math.random() * 30);
+
+    newLocation[0].x = changeFoodX;
+    newLocation[0].y = changeFoodY;
+    this.body = newLocation;
+    console.log(this.body);
+  }
+}
 /*----- cached elements  -----*/
 const gridDiv = document.getElementById("board");
 
@@ -68,12 +98,24 @@ const gridDiv = document.getElementById("board");
 
 /*----- functions -----*/
 const update = () => {};
+const draw = (board) => {
+  let newSnake = new Snake();
+  newSnake.body.forEach((cell) => {
+    const snakeEl = document.createElement("div");
+    snakeEl.style.gridRowStart = cell.y;
+    snakeEl.style.gridColumnStart = cell.x;
+    snakeEl.classList.add("snake");
+    board.push(snakeEl);
+  });
+};
 const main = (currentTime) => {
   window.requestAnimationFrame(main);
   const secondsSinceLastRender = (currentTime - lastRenderTime) / 1000;
   if (secondsSinceLastRender < 1 / SNAKE_SPEED) return;
-  console.log("render");
   lastRenderTime = currentTime;
+
+  update();
+  draw();
 };
 
 // window.requestAnimationFrame(main);
@@ -82,7 +124,7 @@ const init = () => {
   score = 0;
   board = buildBoard();
   snake = new Snake();
-  food = 1;
+  food = new Food();
   direction = snake.direction;
 };
 
