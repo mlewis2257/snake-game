@@ -13,13 +13,13 @@ class Food {
   constructor() {
     this.body = [
       {
-        x: 1,
-        y: 1,
+        x: 8,
+        y: 15,
       },
     ];
   }
-  changeLocation(newLocation) {
-    newLocation = this.body;
+  changeLocation() {
+    let newLocation = this.body;
     let changeFoodX = Math.floor(Math.random() * 30);
     let changeFoodY = Math.floor(Math.random() * 30);
 
@@ -27,6 +27,14 @@ class Food {
     newLocation[0].y = changeFoodY;
     this.body = newLocation;
     console.log(this.body);
+  }
+  renderFood() {
+    const foodEl = document.createElement("div");
+    console.log(this.body[0].x);
+    foodEl.classList.add("food");
+    foodEl.style.gridColumnStart = this.body[0].x;
+    foodEl.style.gridRowStart = this.body[0].y;
+    gridDiv.appendChild(foodEl);
   }
 }
 
@@ -58,18 +66,29 @@ class Snake {
   }
   move() {
     let newHead = this.head;
-
-    switch (this.direction) {
-      case "left":
+    let keypress = document.addEventListener(
+      "keydown",
+      this.OnEvent.bind(this)
+    );
+    switch (keypress) {
+      case "ArrowLeft":
+        console.log("going left");
+        snake.changeDirection("left");
         newHead.x -= 1;
         break;
-      case "right":
+      case "ArrowRight":
+        console.log("going right");
+        snake.changeDirection("right");
         newHead.x += 1;
         break;
-      case "up":
+      case "ArrowUp":
+        console.log("going up");
+        snake.changeDirection("up");
         newHead.y -= 1;
         break;
-      case "down":
+      case "ArrowDown":
+        console.log("going down");
+        snake.changeDirection("down");
         newHead.y += 1;
         break;
     }
@@ -83,12 +102,19 @@ class Snake {
     this.length++;
   }
   collisionChecker() {
-    if (this.head.y < 30 || this.head.y < 0) {
+    if (this.head.y > 30 || this.head.y < 0) {
       console.log("game over, you lost!");
     }
-    if (this.head.x < 30 || this.head.x < 0) {
+    if (this.head.x > 30 || this.head.x < 0) {
       console.log("game over, you lost!");
     }
+  }
+  renderSnake() {
+    const snakeEl = document.createElement("div");
+    snakeEl.classList.add("snake");
+    snakeEl.style.gridColumnStart = this.head.x;
+    snakeEl.style.gridRowStart = this.head.x;
+    gridDiv.appendChild(snakeEl);
   }
 }
 
@@ -96,27 +122,41 @@ class Snake {
 const gridDiv = document.getElementById("board");
 
 /*----- event listeners -----*/
+window.addEventListener("keydown", (evt) => {
+  switch (evt.key) {
+    case "a":
+      console.log("going left");
+      snake.changeDirection("left");
+      // newHead.x -= 1;
+      break;
+    case "d":
+      console.log("going right");
+      snake.changeDirection("right");
+      // newHead.x += 1;
+      break;
+    case "w":
+      console.log("going up");
+      snake.changeDirection("up");
+      // newHead.y -= 1;
+      break;
+    case "s":
+      console.log("going down");
+      snake.changeDirection("down");
+      // newHead.y += 1;
+      break;
+  }
+  console.log(snake.direction);
+});
 
 /*----- functions -----*/
-const update = () => {};
-const draw = (gridDiv) => {
-  let newSnake = new Snake();
-  newSnake.body.forEach((cell) => {
-    const snakeEl = document.createElement("div");
-    snakeEl.style.gridRowStart = cell.y;
-    snakeEl.style.gridColumnStart = cell.x;
-    snakeEl.classList.add("snake");
-    gridDiv.push(snakeEl);
-  });
-};
+/**Potential Game loop that I can use to constantly make requests to the screeen
+ * Can also setTimeout loop to render born.
+ */
 const main = (currentTime) => {
   window.requestAnimationFrame(main);
   const secondsSinceLastRender = (currentTime - lastRenderTime) / 1000;
   if (secondsSinceLastRender < 1 / SNAKE_SPEED) return;
   lastRenderTime = currentTime;
-
-  update();
-  draw();
 };
 
 // window.requestAnimationFrame(main);
@@ -148,36 +188,35 @@ const renderBoard = () => {
   board.forEach((colArr, colIdx) => {
     colArr.forEach((cell, rowIdx) => {
       const cellEl = document.createElement("div");
-      cellEl.style.gridRowStart = rowIdx;
-      cellEl.style.gridColumnStart = colIdx;
-
-      // if (cell[rowIdx] === snake.body.x && cell[colIdx] === snake.body.y) {
-      //   cellEl.classList.add("snake");
-      // } else if (cell[rowIdx] === food.body.x && cell[colIdx] === food.body.y) {
-      //   cellEl.classList.add("food");
-      // }
+      cellEl.style.gridRowStart = rowIdx + 1;
+      cellEl.style.gridColumnStart = colIdx + 1;
+      if (rowIdx === snake.body[0].x && colIdx === snake.body[0].y) {
+        cellEl.classList.add("snake");
+      } else if (rowIdx === food.body[0].x && colIdx === food.body[0].x) {
+        cellEl.classList.add("food");
+      }
       cellEl.style.backgroundColor = "black";
       gridDiv.appendChild(cellEl);
     });
   });
 };
 
-const renderSnake = () => {};
+const renderSnake = () => {
+  snake.renderSnake();
+};
 const renderFood = () => {
   // Render the food randomly within the grid
-  // Check to if
+  food.renderFood();
+  food.changeLocation();
 };
 
-const moveSnake = () => {
-  // Will move through array of divs
-  // Keep track of Head/Tail
-  // Head will be snake[0]
-  // Tail will equal snake.pop()
-  // Snake
-};
+const moveSnake = () => {};
 
 const render = () => {
   renderBoard();
+  renderSnake();
+  renderFood();
+  console.log(snake.body);
 };
 
 init();
