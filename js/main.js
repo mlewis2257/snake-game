@@ -85,14 +85,6 @@ class Snake {
     }
   }
 
-  // collisionChecker() {
-  //   if (this.head.y > 30 || this.head.y < 0) {
-  //     console.log("game over, you lost!");
-  //   }
-  //   if (this.head.x > 30 || this.head.x < 0) {
-  //     console.log("game over, you lost!");
-  //   }
-  // }
   renderSnake() {
     const snakeEl = document.createElement("div");
     snakeEl.classList.add("snake");
