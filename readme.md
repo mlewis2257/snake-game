@@ -1,7 +1,7 @@
 Title: Snake Game
 
 Screenshot
-<img src="/img/Screenshot 2023-08-11 at 12.01.49 AM.png">
+<img src="https://ibb.co/JKBZHSb">
 
 Technologies Used
 -HTML, CSS3 and JavaScipt
